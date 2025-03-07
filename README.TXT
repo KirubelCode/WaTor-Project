@@ -1,70 +1,85 @@
-Wa-Tor Simulation Project
+Wa-Tor Simulation – Multi-Threaded Predator-Prey Model
+Produced by: Kirubel Temesgen
+College ID: C00260396
+Date: 07/12/2024
 
-1. Overview
+Overview
+This project implements the Wa-Tor simulation, a classic predator-prey model, using Go concurrency and threading. The simulation models interactions between fish and sharks on a toroidal grid, where fish breed over time and sharks hunt for fish to survive.
 
-The Wa-Tor simulation models sharks and fish on a toroidal grid. Implemented in Go, it demonstrates concurrency and threading for simulation.
+This project demonstrates:
 
-2. Project Structure
+Efficient parallel processing using Go routines and WaitGroups.
+Dynamic workload distribution across multiple threads.
+Optimised synchronisation techniques to handle concurrent grid updates.
+Features
 
-NonThreadedVersion/: Basic implementation without threading. or --> use Old-State branch wa-tor file in parent directory.
+Multi-Threaded Execution – Utilises concurrent processing for entity movement.
+Customisable Simulation Parameters – Users can specify grid size, entity count, breeding time, and starvation thresholds.
+Toroidal Grid Representation – Allows seamless movement across edges.
+Performance Benchmarking – Measures execution time for different thread counts.
 
-Main Branch
-main/: Implementation with threading.
+Installation
 
-3. Parameters
+1. Prerequisites
+Go (Golang) installed (latest version recommended).
+Command-line access (Windows, macOS, or Linux).
 
-The simulation accepts the following parameters:
+2. Clone the Repository
+Run the following commands:
+git clone https://github.com/KirubelCode/WaTor-Project.git
 
-NumShark: Starting shark population.
+3. Compile and Run the Simulation
+To run with default settings:
+go run main.go
 
-NumFish: Starting fish population.
-
-FishBreed: Chronons for fish reproduction.
-
-SharkBreed: Chronons for shark reproduction.
-
-Starve: Time before sharks die without food.
-
-GridSize: Dimensions of the grid.
-
-Threads: Number of threads for concurrency (threaded version only).
-
-Can be added via terminal i.e:
-
-Or
-
-Within the code in the top of main.go
-
-4. Usage
-
-Non-Threaded Version:
-
-Non-threaded Version - /wa-tor/main (Old-State branch)
-go run main.go <NumShark> <NumFish> <FishBreed> <SharkBreed> <Starve> <GridSize>
-
-Threaded Version:
-
-Threaded Version - main/ (main branch)
+To specify parameters:
 go run main.go <NumShark> <NumFish> <FishBreed> <SharkBreed> <Starve> <GridSize> <Threads>
 
-5. Results
+Example:
+go run main.go 100 100 3 3 4 100 8
+(Runs the simulation with 100 fish, 100 sharks, 100x100 grid, and 8 threads).
 
-Speedup measurements with 1, 2, 4, and 8 threads.
+Simulation Parameters
+Parameter	Description	Default Value
+NumShark	Number of sharks	100
+NumFish	Number of fish	100
+FishBreed	Breeding time for fish (chronons)	3
+SharkBreed	Breeding time for sharks (chronons)	3
+Starve	Starvation threshold for sharks	4
+GridSize	Grid dimensions (NxN)	100
+Threads	Number of concurrent threads	10
 
-Results are documented in Wa-tor Speedup Results/ with tables.
+How It Works
+Grid Initialisation – The simulation starts with a random distribution of fish and sharks.
+Parallel Entity Movement – Fish and sharks move concurrently, processed by separate threads.
+Shark Behaviour – Sharks hunt for fish, consume energy, and starve if no food is available.
+Fish Reproduction – Fish breed at a predefined rate if space is available.
+Thread Synchronisation – The grid is divided into sections, and each thread updates a portion before synchronising with the main grid.
+Performance Logging – Execution time is measured to analyse concurrency efficiency.
 
-6. Requirements
+Performance Observations
+Grid Size	Fish	Sharks	Steps	Threads	Execution Time
+50x50	50	50	50	1	6.337s
+50x50	50	50	50	2	6.668s
+100x100	100	100	50	4	1.80s
+100x100	100	100	50	8	2.725s
+100x100	100	100	50	10	2.01s
 
-Go Language: Installed via sudo apt install golang.
+Key Findings
+Low thread counts (1-2) offer minimal speedup due to thread creation overhead.
+4 threads show optimal performance on a dual-core processor (maximising concurrency).
+Higher thread counts (8-10) introduce synchronisation delays, limiting performance gains.
 
-Linux Environment: Tested using WSL and Ubuntu.
+File Structure
+Wa-Tor-Simulation
+│── main.go # Simulation entry point
+│── movement.go # Concurrency-based entity movement logic
+│── grid.go # Grid structure and initialisation
+│── shark.go # Shark behaviour implementation
+│── fish.go # Fish behaviour implementation
+│── README.md # Project documentation
 
-7. Author
-
-Kirubel Temesgen
-
-8. License
-
-This project is licensed under the MIT License.
-Refrences found in Wa-tor Speedup Results/
-
+Future Enhancements
+Dynamic Load Balancing – Adaptive thread allocation based on real-time workload.
+Graphical Visualisation – Adding a GUI for real-time simulation playback.
+Machine Learning Integration – Training models to predict ecosystem changes.
