@@ -1,6 +1,7 @@
 Wa-Tor Simulation – Multi-Threaded Predator-Prey Model
 This project implements the Wa-Tor predator-prey simulation using Go and demonstrates a strong understanding of concurrency. The simulation models a toroidal ecosystem where fish and sharks move, breed, and survive based on simple rules. It uses multi-threading with Go's goroutines and synchronisation tools to efficiently handle updates across the grid in parallel, speeding up execution on multi-core systems.
 
+- Inspired by: https://en.wikipedia.org/wiki/Wa-Tor
 ------
 
 Overview
@@ -25,7 +26,7 @@ Installation & Usage
 Clone the Repository:
 - git clone https://github.com/KirubelCode/WaTor-Project.git
 - cd WaTor-Project
-- 
+
 Run the Simulation:
 - To run with default settings (100 fish, 100 sharks, 100x100 grid, 10 threads): go run main.go
 
