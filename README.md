@@ -1,85 +1,65 @@
 Wa-Tor Simulation – Multi-Threaded Predator-Prey Model
-Produced by: Kirubel Temesgen
-College ID: C00260396
-Date: 07/12/2024
+This project implements the Wa-Tor predator-prey simulation using Go and demonstrates a strong understanding of concurrency. The simulation models a toroidal ecosystem where fish and sharks move, breed, and survive based on simple rules. It uses multi-threading with Go's goroutines and synchronisation tools to efficiently handle updates across the grid in parallel, speeding up execution on multi-core systems.
+
+------
 
 Overview
-This project implements the Wa-Tor simulation, a classic predator-prey model, using Go concurrency and threading. The simulation models interactions between fish and sharks on a toroidal grid, where fish breed over time and sharks hunt for fish to survive.
+The Wa-Tor simulation models a predator-prey system where fish move and breed, while sharks hunt fish and die if they starve. The world is a toroidal grid, meaning creatures that move off one edge reappear on the other. The key focus of this project is concurrency: the simulation updates parts of the grid concurrently using multiple threads, making it faster and more efficient.
 
-This project demonstrates:
+------
 
-Efficient parallel processing using Go routines and WaitGroups.
-Dynamic workload distribution across multiple threads.
-Optimised synchronisation techniques to handle concurrent grid updates.
-Features
+Key Features
+- Concurrency: Parallelizes the movement and actions of fish and sharks using Go’s goroutines.
 
-Multi-Threaded Execution – Utilises concurrent processing for entity movement.
-Customisable Simulation Parameters – Users can specify grid size, entity count, breeding time, and starvation thresholds.
-Toroidal Grid Representation – Allows seamless movement across edges.
-Performance Benchmarking – Measures execution time for different thread counts.
+- Customisable Parameters: Configure the grid size, number of fish/sharks, breeding intervals, and number of threads.
 
-Installation
+- Toroidal World: Grid wraps around, ensuring continuous movement.
 
-1. Prerequisites
-Go (Golang) installed (latest version recommended).
-Command-line access (Windows, macOS, or Linux).
+- Performance Benchmarking: Logs execution time for different configurations to evaluate the impact of concurrency.
 
-2. Clone the Repository
-Run the following commands:
-git clone https://github.com/KirubelCode/WaTor-Project.git
+-----
 
-3. Compile and Run the Simulation
-To run with default settings:
-go run main.go
+Installation & Usage
+- Prerequisites: Install Go (latest version recommended) on your system.
 
-To specify parameters:
-go run main.go <NumShark> <NumFish> <FishBreed> <SharkBreed> <Starve> <GridSize> <Threads>
+Clone the Repository:
+- git clone https://github.com/KirubelCode/WaTor-Project.git
+- cd WaTor-Project
+- 
+Run the Simulation:
+- To run with default settings (100 fish, 100 sharks, 100x100 grid, 10 threads): go run main.go
 
-Example:
+- To customise parameters (e.g., 100 fish, 100 sharks, 8 threads):
 go run main.go 100 100 3 3 4 100 8
-(Runs the simulation with 100 fish, 100 sharks, 100x100 grid, and 8 threads).
 
-Simulation Parameters
-Parameter	Description	Default Value
-NumShark	Number of sharks	100
-NumFish	Number of fish	100
-FishBreed	Breeding time for fish (chronons)	3
-SharkBreed	Breeding time for sharks (chronons)	3
-Starve	Starvation threshold for sharks	4
-GridSize	Grid dimensions (NxN)	100
-Threads	Number of concurrent threads	10
+Parameters:
+- NumFish: Number of fish
 
-How It Works
-Grid Initialisation – The simulation starts with a random distribution of fish and sharks.
-Parallel Entity Movement – Fish and sharks move concurrently, processed by separate threads.
-Shark Behaviour – Sharks hunt for fish, consume energy, and starve if no food is available.
-Fish Reproduction – Fish breed at a predefined rate if space is available.
-Thread Synchronisation – The grid is divided into sections, and each thread updates a portion before synchronising with the main grid.
-Performance Logging – Execution time is measured to analyse concurrency efficiency.
+- NumSharks: Number of sharks
 
-Performance Observations
-Grid Size	Fish	Sharks	Steps	Threads	Execution Time
-50x50	50	50	50	1	6.337s
-50x50	50	50	50	2	6.668s
-100x100	100	100	50	4	1.80s
-100x100	100	100	50	8	2.725s
-100x100	100	100	50	10	2.01s
+- FishBreed: Fish breeding interval
 
-Key Findings
-Low thread counts (1-2) offer minimal speedup due to thread creation overhead.
-4 threads show optimal performance on a dual-core processor (maximising concurrency).
-Higher thread counts (8-10) introduce synchronisation delays, limiting performance gains.
+- SharkBreed: Shark breeding interval
 
-File Structure
-Wa-Tor-Simulation
-│── main.go # Simulation entry point
-│── movement.go # Concurrency-based entity movement logic
-│── grid.go # Grid structure and initialisation
-│── shark.go # Shark behaviour implementation
-│── fish.go # Fish behaviour implementation
-│── README.md # Project documentation
+- Starve: Starvation time for sharks
 
-Future Enhancements
-Dynamic Load Balancing – Adaptive thread allocation based on real-time workload.
-Graphical Visualisation – Adding a GUI for real-time simulation playback.
-Machine Learning Integration – Training models to predict ecosystem changes.
+- GridSize: Grid dimensions (N x N)
+
+- Threads: Number of threads to use for concurrency
+
+-----
+
+Technologies Used
+Go (Golang): Core logic and concurrency management.
+
+Standard Library: For synchronisation (e.g., sync.WaitGroup).
+
+-----
+
+Future Improvements
+
+- Extended Features: Add new creatures or behaviors to increase complexity.
+
+- Code Optimisation: Refactor code for better readability and efficiency.
+
+- Testing: Add a comprehensive suite of tests, including concurrency-specific ones.
