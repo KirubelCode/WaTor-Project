@@ -28,7 +28,7 @@ Clone the Repository:
 - cd WaTor-Project
 
 Run the Simulation:
-- To run with default settings (100 fish, 100 sharks, 100x100 grid, 10 threads): go run main.go
+- To run with default settings (100 fish, 100 sharks, 100x100 grid, 10 threads): go run . # Runs related go files
 
 - To customise parameters (e.g., 100 fish, 100 sharks, 8 threads):
 go run main.go 100 100 3 3 4 100 8
